@@ -50,7 +50,7 @@ py==1.8.1
 pyasn1==0.4.8
 pycodestyle==2.6.0
 pycparser==2.20
-pycryptodome==3.3.1
+pycryptodome==3.6.6
 PyJWT==1.7.1
 pylint==2.3.1
 pyOpenSSL==19.1.0
