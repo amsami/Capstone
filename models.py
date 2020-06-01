@@ -3,9 +3,13 @@ from sqlalchemy import Column, String, Integer
 from flask_sqlalchemy import SQLAlchemy
 import json
 
-database_filename = "database.db"
-project_dir = os.path.dirname(os.path.abspath(__file__))
-database_path = "sqlite:///{}".format(os.path.join(project_dir, database_filename))
+#database_filename = "database.db"
+#project_dir = os.path.dirname(os.path.abspath(__file__))
+#database_path = "sqlite:///{}".format(os.path.join(project_dir, database_filename))
+#database_path = "sqlite:///{}".format(os.path.join(project_dir, database_filename))
+#SQLALCHEMY_DATABASE_URI = 'postgresql://postgres:1234@localhost:5432/casting'
+#database_path = 'postgresql://postgres:1234@localhost:5432/casting'
+database_path = 'postgres://vgaidjkhnksymk:8866d2ae6408947eb238d724326b43d7f217d072461e5b9f399c997e07e9d274@ec2-52-202-146-43.compute-1.amazonaws.com:5432/d4h14pmc2hrp8f'
 
 db = SQLAlchemy()
 
@@ -29,79 +33,42 @@ def db_drop_and_create_all():
     db.drop_all()
     db.create_all()
 
-'''
-Drink
-a persistent drink entity, extends the base SQLAlchemy Model
-'''
-class Drink(db.Model):
-    # Autoincrementing, unique primary key
-    id = Column(Integer().with_variant(Integer, "sqlite"), primary_key=True)
-    # String Title
-    title = Column(String(80), unique=True)
-    # the ingredients blob - this stores a lazy json blob
-    # the required datatype is [{'color': string, 'name':string, 'parts':number}]
-    recipe =  Column(String(180), nullable=False)
 
-    '''
-    short()
-        short form representation of the Drink model
-    '''
-    def short(self):
-        print(json.loads(self.recipe))
-        short_recipe = [{'color': r['color'], 'parts': r['parts']} for r in json.loads(self.recipe)]
-        return {
+class Movie(db.Model):
+    __tablename__ = 'movies'
+
+    id = Column(db.Integer, primary_key=True)
+    title = Column(db.String(50), nullable=False)
+    release_date = Column(db.String(4), nullable=False)
+    
+    def __init__(self, title, release_date):
+        self.title = title
+        self.release_date = release_date
+
+    def format(self):
+        return{
             'id': self.id,
             'title': self.title,
-            'recipe': short_recipe
+            'release_date': self.release_date
         }
 
-    '''
-    long()
-        long form representation of the Drink model
-    '''
-    def long(self):
+class Actor(db.Model):
+    __tablename__ = 'actors'
+
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(25), nullable=False)
+    age = db.Column(db.Integer, nullable=False)
+    gender = db.Column(db.String(10), nullable=False)
+
+    def __init__(self, name, age, gender):
+        self.name = name
+        self.age = age
+        self.gender = gender
+
+    def format(self):
         return {
             'id': self.id,
-            'title': self.title,
-            'recipe': json.loads(self.recipe)
+            'name': self.name,
+            'age': self.age,
+            'gender': self.gender
         }
-
-    '''
-    insert()
-        inserts a new model into a database
-        the model must have a unique name
-        the model must have a unique id or null id
-        EXAMPLE
-            drink = Drink(title=req_title, recipe=req_recipe)
-            drink.insert()
-    '''
-    def insert(self):
-        db.session.add(self)
-        db.session.commit()
-
-    '''
-    delete()
-        deletes a new model into a database
-        the model must exist in the database
-        EXAMPLE
-            drink = Drink(title=req_title, recipe=req_recipe)
-            drink.delete()
-    '''
-    def delete(self):
-        db.session.delete(self)
-        db.session.commit()
-
-    '''
-    update()
-        updates a new model into a database
-        the model must exist in the database
-        EXAMPLE
-            drink = Drink.query.filter(Drink.id == id).one_or_none()
-            drink.title = 'Black Coffee'
-            drink.update()
-    '''
-    def update(self):
-        db.session.commit()
-
-    def __repr__(self):
-        return json.dumps(self.short())
