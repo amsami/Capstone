@@ -6,6 +6,8 @@ from flask_sqlalchemy import SQLAlchemy
 from app import APP
 from models import setup_db, Movie, Actor, db
 
+#TOKEN_PRODUCER = 'Bearer ...'
+
 class CastingAgencyTestCase(unittest.TestCase):
     """This class represents the casting agency test case"""
 
@@ -13,8 +15,8 @@ class CastingAgencyTestCase(unittest.TestCase):
         """Define test variables and initialize app."""
         self.app = APP
         self.client = self.app.test_client
-        self.database_name = "casting-agency"
-        self.database_path = "postgres://postgres:stemed@{}/{}".format('localhost:5432', self.database_name)
+        self.database_name = "casting_test"
+        self.database_path = "postgres://postgres:1234@{}/{}".format('localhost:5432', self.database_name)
         setup_db(self.app, self.database_path)
 
         self.casting_assistant_header = {
@@ -30,24 +32,24 @@ class CastingAgencyTestCase(unittest.TestCase):
         }
 
         self.movie = {
-            'title': 'Avengers: Endgame',
-            'release_date': '2019'
+            'title': 'Sicario',
+            'release_date': '2017'
         }
 
         self.new_movie = {
-            'title': 'Black Widow',
-            'release_date': '2019'
+            'title': 'Guardians of the Galaxy',
+            'release_date': '2014'
         }
 
         self.actor = {
-            'name': 'Scarlett Johansson',
+            'name': 'Scarlett',
             'age': '35',
             'gender': 'Female'
         }
 
         self.new_actor = {
-            'name': 'Robert Downey Jr.',
-            'age': '54',
+            'name': 'Matt Deamon',
+            'age': '49',
             'gender': 'Male'
         }
 
@@ -195,14 +197,14 @@ class CastingAgencyTestCase(unittest.TestCase):
         self.assertEqual(data['success'], True)
 
     def test_patch_actors_executive_producer(self):
-        res = self.client().patch('/actors/1', json={'age': "43"}, headers=self.executive_producer_header)
+        res = self.client().patch('/actors/1', json={'age': "49"}, headers=self.executive_producer_header)
         data = json.loads(res.data)
 
         self.assertEqual(res.status_code, 200)
         self.assertEqual(data['success'], True)
 
     def test_patch_actors_does_not_exist(self):
-        res = self.client().patch('/actors/1000', json={'age': "43"}, headers=self.executive_producer_header)
+        res = self.client().patch('/actors/1000', json={'age': "49"}, headers=self.executive_producer_header)
         
         self.assertEqual(res.status_code, 404)
 
