@@ -15,7 +15,7 @@ database_path = os.environ['DATABASE_URL']
 #if not database_path:
 #    database_name = ""
 #    database_path = 'postgresql://postgres:1234@localhost:5432/casting'
-default_path='postgresql://postgres:1234@localhost:5432/casting-sami'
+default_path='postgresql://postgres:1234@localhost:5432/casting'
 
 #database_path = 'postgresql://postgres:1234@localhost:5432/casting-sami'
 
