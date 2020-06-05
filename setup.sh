@@ -1,4 +1,4 @@
-DATABASE_URL = 'postgresql://postgres:1234@localhost:5432/casting'
+export DATABASE_URL='postgresql://postgres:1234@localhost:5432/casting-sami'
 
 
 #DATABASE_URL should be set in setup.sh and pass it to models.py using database_path = os.environ['DATABASE_URL]
