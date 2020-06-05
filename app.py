@@ -47,9 +47,9 @@ def after_request(response):
 '''
 
 
-#@APP.route('/', methods=['GET'])
-#def welcome():
-#    return jsonify("Welcome to my app")
+@APP.route('/', methods=['GET'])
+def welcome():
+    return jsonify("Welcome to my app")
 
 
 @APP.route('/actors')
