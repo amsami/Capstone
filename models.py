@@ -12,6 +12,10 @@ DATABASE_URL = 'postgresql://postgres:1234@localhost:5432/casting'
 #database_path = 'postgres://vgaidjkhnksymk:8866d2ae6408947eb238d724326b43d7f217d072461e5b9f399c997e07e9d274@ec2-52-202-146-43.compute-1.amazonaws.com:5432/d4h14pmc2hrp8f'
 database_path = os.environ['DATABASE_URL']
 
+if not database_path:
+    database_name = ""
+    database_path = 'postgresql://postgres:1234@localhost:5432/casting'
+
 db = SQLAlchemy()
 
 '''
