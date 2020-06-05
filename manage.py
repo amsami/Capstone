@@ -7,7 +7,7 @@ from app import APP
 from models import db
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:1234@localhost:5432/casting-sami'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:1234@localhost:5432/casting'
 db = SQLAlchemy(app)
 migrate = Migrate(APP, db)
 manager = Manager(APP)

@@ -3,21 +3,12 @@ from sqlalchemy import Column, String, Integer
 from flask_sqlalchemy import SQLAlchemy
 import json
 
-#database_filename = "database.db"
-#project_dir = os.path.dirname(os.path.abspath(__file__))
-#database_path = "sqlite:///{}".format(os.path.join(project_dir, database_filename))
-#database_path = "sqlite:///{}".format(os.path.join(project_dir, database_filename))
+
 #SQLALCHEMY_DATABASE_URI = 'postgresql://postgres:1234@localhost:5432/casting'
 #DATABASE_URL = 'postgresql://postgres:1234@localhost:5432/casting'
-#database_path = 'postgres://vgaidjkhnksymk:8866d2ae6408947eb238d724326b43d7f217d072461e5b9f399c997e07e9d274@ec2-52-202-146-43.compute-1.amazonaws.com:5432/d4h14pmc2hrp8f'
 database_path = os.environ['DATABASE_URL']
 
-#if not database_path:
-#    database_name = ""
-#    database_path = 'postgresql://postgres:1234@localhost:5432/casting'
 default_path='postgresql://postgres:1234@localhost:5432/casting'
-
-#database_path = 'postgresql://postgres:1234@localhost:5432/casting-sami'
 
 database_path=os.getenv('DATABASE_URL', default_path)
 
