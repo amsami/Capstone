@@ -10,7 +10,7 @@ import os
 
 AUTH0_DOMAIN = 'fsnd-sami.auth0.com'
 ALGORITHMS = ['RS256']
-API_AUDIENCE = 'http://localhost:5000/'
+API_AUDIENCE = 'http://localhost:5000'
 
 # AuthError Exception
 '''

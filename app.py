@@ -51,7 +51,10 @@ def after_request(response):
     GET /actors
 '''
 
-#token='bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6ImpHYnNWOHFnVEJxdXV2a2NaUWxSRyJ9.eyJpc3MiOiJodHRwczovL2ZzbmQtc2FtaS5hdXRoMC5jb20vIiwic3ViIjoiZ29vZ2xlLW9hdXRoMnwxMDQxOTczOTI3Mzc2ODI0MDk1NTQiLCJhdWQiOiJodHRwOi8vbG9jYWxob3N0OjUwMDAiLCJpYXQiOjE1OTExOTkyOTUsImV4cCI6MTU5MTIwNjQ5NSwiYXpwIjoiSTVnVWU0TGZvUVk1M2FLRGZZV2N6VE9Ub3UxdjNvQWQiLCJzY29wZSI6IiIsInBlcm1pc3Npb25zIjpbImRlbGV0ZTphY3RvcnMiLCJkZWxldGU6bW92aWVzIiwiZ2V0OmFjdG9ycyIsImdldDptb3ZpZXMiLCJwYXRjaDphY3RvcnMiLCJwYXRjaDptb3ZpZXMiLCJwb3N0OmFjdG9ycyIsInBvc3Q6bW92aWVzIl19.nlQWzoKNVOTk5p9C6Z8oxZ8rJqxxuCjoZYG-kF4bTpRNT1mOYTEWbtLwm5Am9YEOcH-cRLEe4-m423F8FQTOmXbRkIY47WWVZgsYwhxCG2zOEjmJykp8SDz3eHGxcFqqqeqRfbMUeWUAcue9zKKYMEBnMAuZpbMCc6tPdJ12NS378nxQyZqqtg2kWldyZZjT2QEDX_KaufgJhQ9FDcKhH09d5WyJkj3S3nOkPXpj7uHk7z1fcWJalH--Ip7RlwT4UmEUKsjPJ1x6uOwiisVOf_1ySzcLWPl1BZaZCOdfGZbdMvm6sWRT3RqQ9uBfv1D03wP2wRZQB2khd4bjN1apCQ&scope=&expires_in=7200&token_type=Bearer&state=g6Fo2SBmRXdSLWpDSzhmRVZzTGRWV3NMbzk0RzZBcklUQ1MzdKN0aWTZIE9meGhRc0FCb01DM1dWc29XTEhqak01TWljcVd1NnFao2NpZNkgSTVnVWU0TGZvUVk1M2FLRGZZV2N6VE9Ub3UxdjNvQWQ'
+@APP.route('/', methods=['GET'])
+def health():
+    return jsonify("Welcome to my app")
+
 
 @APP.route('/actors')
 @requires_auth('get:actors')
@@ -92,7 +95,7 @@ def get_movies(token):
     abort(422)
 
 @APP.route('/actors/<id>', methods=['PATCH'])
-@requires_auth('patch:actor')
+@requires_auth('patch:actors')
 def update_actor(token, id):
     body = request.get_json()
     actor = Actor.query.get(id)
@@ -128,7 +131,7 @@ def update_actor(token, id):
 
 
 @APP.route('/movies/<id>', methods=['PATCH'])
-@requires_auth('patch:movie')
+@requires_auth('patch:movies')
 def update_movie(token, id):
     body = request.get_json()
     movie = Movie.query.get(id)
@@ -160,7 +163,7 @@ def update_movie(token, id):
     }), 200
 
 @APP.route('/actors', methods=['POST'])
-@requires_auth('post:actor')
+@requires_auth('post:actors')
 def add_actor(token):
     body = request.get_json()
 
@@ -191,7 +194,7 @@ def add_actor(token):
 
 
 @APP.route('/actors/<id>', methods=['DELETE'])
-@requires_auth('delete:actor')
+@requires_auth('delete:actors')
 def delete_actor(token, id):
     actor = Actor.query.get(id)
 
