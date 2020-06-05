@@ -2,17 +2,12 @@ import os
 from flask import Flask, request, jsonify, abort
 from sqlalchemy import exc
 import json
-#from . import models
-#from .models import db, setup_db, Actor, Movie
 from models import db, setup_db, Actor, Movie
 from flask_cors import CORS
 from flask import Flask, session, redirect
 from flask_session import Session
 
-#from .auth import AuthError, requires_auth
 from auth import AuthError, requires_auth
-
-AUTH0_DOMAIN = 'fsnd-sami.auth0.com'
 
 def create_app(test_config=None):
     # create and configure the app
@@ -51,9 +46,10 @@ def after_request(response):
     GET /actors
 '''
 
-@APP.route('/', methods=['GET'])
-def health():
-    return jsonify("Welcome to my app")
+
+#@APP.route('/', methods=['GET'])
+#def welcome():
+#    return jsonify("Welcome to my app")
 
 
 @APP.route('/actors')
