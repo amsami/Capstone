@@ -2,17 +2,41 @@ import os
 from flask import Flask, request, jsonify, abort
 from sqlalchemy import exc
 import json
-from models import db, setup_db, Actor, Movie
+#from models import db, setup_db, Actor, Movie
+from models import db, Actor, Movie
 from flask_cors import CORS
 from flask import Flask, session, redirect
 from flask_session import Session
+from flask_sqlalchemy import SQLAlchemy
+from flask_migrate import Migrate
 
 from auth import AuthError, requires_auth
+
+database_path = os.environ['DATABASE_URL']
+
+default_path='postgresql://postgres:1234@localhost:5432/casting'
+
+database_path=os.getenv('DATABASE_URL', default_path)
+
+#db = SQLAlchemy()
+migrate = Migrate()
 
 def create_app(test_config=None):
     # create and configure the app
     app = Flask(__name__)
-    setup_db(app)
+#    app.config.from_object(os.environ['APP_SETTINGS'])
+    app.config["SQLALCHEMY_DATABASE_URI"] = database_path
+    app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+    db.init_app(app)
+    migrate.init_app(app, db)
+
+#    setup_db(app)
+#    app.config["SQLALCHEMY_DATABASE_URI"] = database_path
+#    app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+#    db.app = app
+#    db.init_app(app)
+#    db.create_all()
+  
     CORS(app)
     cors = CORS(app, resource={r"/*": {"origins": "*"}})
 

@@ -2,29 +2,38 @@ import os
 from sqlalchemy import Column, String, Integer
 from flask_sqlalchemy import SQLAlchemy
 import json
+from flask import Flask
+from flask_migrate import Migrate
 
+db = SQLAlchemy()
+#migrate = Migrate()
 
 #SQLALCHEMY_DATABASE_URI = 'postgresql://postgres:1234@localhost:5432/casting'
 #DATABASE_URL = 'postgresql://postgres:1234@localhost:5432/casting'
-database_path = os.environ['DATABASE_URL']
+#database_path = os.environ['DATABASE_URL']
 
-default_path='postgresql://postgres:1234@localhost:5432/casting'
+#default_path='postgresql://postgres:1234@localhost:5432/casting'
 
-database_path=os.getenv('DATABASE_URL', default_path)
+#database_path=os.getenv('DATABASE_URL', default_path)
 
-db = SQLAlchemy()
+#database_path = os.environ['DATABASE_URL']
+
+#default_path='postgresql://postgres:1234@localhost:5432/casting'
+
+#database_path=os.getenv('DATABASE_URL', default_path)
 
 '''
 setup_db(app)
     binds a flask application and a SQLAlchemy service
 '''
 
-def setup_db(app, database_path=database_path):
+#def setup_db(app, database_path=database_path):
 #    app.config["SQLALCHEMY_DATABASE_URI"] = database_path
 #    app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
-    db.app = app
-    db.init_app(app)
-    db.create_all()
+##    db.app = app
+#    db.init_app(app)
+#    migrate.init_app(app, db)
+#    db.create_all()
 
 
 '''
@@ -33,9 +42,9 @@ db_drop_and_create_all()
     can be used to initialize a clean database
     !!NOTE you can change the database_filename variable to have multiple verisons of a database
 '''
-def db_drop_and_create_all():
-    db.drop_all()
-    db.create_all()
+#def db_drop_and_create_all():
+#    db.drop_all()
+#    db.create_all()
 
 
 #db_drop_and_create_all()
