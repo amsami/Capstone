@@ -182,11 +182,11 @@ def update_movie(token, id):
       'success': True
     }), 200
 
-@APP.route('/actors', methods=['POST'])
+@APP.route('/actors/add', methods=['POST'])
 @requires_auth('post:actors')
 def add_actor(token):
     body = request.get_json()
-
+    #original_count = len(actor.query.all())
     if body is None:
       abort(404)
 
@@ -199,7 +199,7 @@ def add_actor(token):
       db.session.add(new_actor)
       db.session.commit()
       new_id = new_actor.id
-
+      print (new_id)
     except:
       db.session.rollback()
       abort(422)
@@ -212,6 +212,34 @@ def add_actor(token):
       'success': True
     }), 201
 
+@APP.route('/movies/add', methods=['POST'])
+@requires_auth('post:movies')
+def add_movie(token):
+    body = request.get_json()
+
+    if body is None:
+      abort(404)
+
+    title = body['title']
+    release_date = body['release_date']
+  
+    try:
+      new_movie = Movie(title=title, release_date=release_date)
+      db.session.add(new_movie)
+      db.session.commit()
+      new_id = new_movie.id
+
+    except:
+      db.session.rollback()
+      abort(422)
+
+    finally:
+      db.session.close()
+
+    return jsonify({
+      'id': new_id,
+      'success': True
+    }), 201
 
 @APP.route('/actors/<id>', methods=['DELETE'])
 @requires_auth('delete:actors')
@@ -235,6 +263,31 @@ def delete_actor(token, id):
     return jsonify({
       'success': True
     }), 200
+
+
+@APP.route('/movies/<id>', methods=['DELETE'])
+@requires_auth('delete:movies')
+def delete_movie(token, id):
+    movie = Movie.query.get(id)
+
+    if movie is None:
+      abort(404)
+
+    try:
+      db.session.delete(movie)
+      db.session.commit()
+
+    except:
+      db.session.rollback()
+      abort(422)
+
+    finally:
+      db.session.close()
+
+    return jsonify({
+      'success': True
+    }), 200
+
 
 # Error Handling
 
