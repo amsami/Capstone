@@ -1,4 +1,7 @@
 export DATABASE_URL='postgresql://postgres:1234@localhost:5432/casting'
+export AUTH0_DOMAIN='fsnd-sami.auth0.com'
+export ALGORITHMS=['RS256']
+export API_AUDIENCE='http://localhost:5000'
 
 
 #DATABASE_URL should be set in setup.sh and pass it to models.py using database_path = os.environ['DATABASE_URL]

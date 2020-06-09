@@ -7,10 +7,12 @@ from urllib.request import urlopen
 import sys
 import os
 
-
-AUTH0_DOMAIN = 'fsnd-sami.auth0.com'
-ALGORITHMS = ['RS256']
-API_AUDIENCE = 'http://localhost:5000'
+AUTH0_DOMAIN = os.environ['AUTH0_DOMAIN']
+ALGORITHMS = os.environ['ALGORITHMS']
+API_AUDIENCE = os.environ['API_AUDIENCE']
+#AUTH0_DOMAIN = 'fsnd-sami.auth0.com'
+#ALGORITHMS = ['RS256']
+#API_AUDIENCE = 'http://localhost:5000'
 
 # AuthError Exception
 '''

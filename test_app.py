@@ -6,8 +6,8 @@ from flask_sqlalchemy import SQLAlchemy
 from app import APP
 from models import Movie, Actor, db
 
-TOKEN_PRODUCER = 'Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6ImpHYnNWOHFnVEJxdXV2a2NaUWxSRyJ9.eyJpc3MiOiJodHRwczovL2ZzbmQtc2FtaS5hdXRoMC5jb20vIiwic3ViIjoiYXV0aDB8NWVkNWViOWQyNjYxNGEwYmU0YjQwNGFhIiwiYXVkIjoiaHR0cDovL2xvY2FsaG9zdDo1MDAwIiwiaWF0IjoxNTkxNTc1NTgyLCJleHAiOjE1OTE2NjE5ODIsImF6cCI6Ikk1Z1VlNExmb1FZNTNhS0RmWVdjelRPVG91MXYzb0FkIiwiZ3R5IjoicGFzc3dvcmQiLCJwZXJtaXNzaW9ucyI6WyJkZWxldGU6YWN0b3JzIiwiZGVsZXRlOm1vdmllcyIsImdldDphY3RvcnMiLCJnZXQ6bW92aWVzIiwicGF0Y2g6YWN0b3JzIiwicGF0Y2g6bW92aWVzIiwicG9zdDphY3RvcnMiLCJwb3N0Om1vdmllcyJdfQ.X2a-EO9lSXcNvEov-FkgevGUkfcoAXMVGiS0VBlzrUb7KAEx256eOVoMjb6S8ccoC1X_n-bmVc5sngSGKQrjOpettNNJnqqeXjdvQTwx8FeWN7q09mUkb1_E5tjySu6Hs6SuKjsi7xlJ-SROaWMQ63LYV__OkeuBh_64dfmhU4dPPY1NuVqKuUQaLubGrWZNiUeZCN75gGXQTBjEz2EY4rE5WWdgV1SNJkrXfhTf6bWMkm_p6SzfWwArC4W3zh5xXEfXOUhskiEXG3ZCm1SYsidsNL2yYuIZV1IantFawFlJ1IVCAIdvNvDjXrGAXwNhOwS9RsrUyoGQfdcPTbGeUw'
-
+TOKEN_PRODUCER = 'Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6ImpHYnNWOHFnVEJxdXV2a2NaUWxSRyJ9.eyJpc3MiOiJodHRwczovL2ZzbmQtc2FtaS5hdXRoMC5jb20vIiwic3ViIjoiYXV0aDB8NWVkNWViOWQyNjYxNGEwYmU0YjQwNGFhIiwiYXVkIjoiaHR0cDovL2xvY2FsaG9zdDo1MDAwIiwiaWF0IjoxNTkxNzExODg5LCJleHAiOjE1OTE3OTgyODksImF6cCI6Ikk1Z1VlNExmb1FZNTNhS0RmWVdjelRPVG91MXYzb0FkIiwiZ3R5IjoicGFzc3dvcmQiLCJwZXJtaXNzaW9ucyI6WyJkZWxldGU6YWN0b3JzIiwiZGVsZXRlOm1vdmllcyIsImdldDphY3RvcnMiLCJnZXQ6bW92aWVzIiwicGF0Y2g6YWN0b3JzIiwicGF0Y2g6bW92aWVzIiwicG9zdDphY3RvcnMiLCJwb3N0Om1vdmllcyJdfQ.va1mhqh4gClNH-1QIa4hb5-XH1_OgI-i30sBOpP_trhu-fwzo4FFIr_2Xgt-Z_SQS6YgYmqu3vaYvMg3l6hDx3nRsBlme5ibE5aboFfJ-oiVJxXczFXDJdrdZT9myM9suES6McFB306fnr7o75fxPhz_LlMJd-7p0B752s50XqjG4lFc3JalR6FuF0-wcmZOEAPcUKVESvvIviNHpwUccmwwXl6s3rvT2bRcldSYugyQXLH_BVBAK0zqh_YVQ36Qz09_e_fqyJDl_DAQlAGkEntkhrd3uD9iG5MA5RWQvnLK1ojaztddQE6w68i3kLaEI6u3elF_VyMzfqs1eQFsOQ'
+TOKEN_ASSISTANT = 'Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6ImpHYnNWOHFnVEJxdXV2a2NaUWxSRyJ9.eyJpc3MiOiJodHRwczovL2ZzbmQtc2FtaS5hdXRoMC5jb20vIiwic3ViIjoiYXV0aDB8NWVkNWViZjg0MjRlZDQwYmVlMzZjZjhhIiwiYXVkIjoiaHR0cDovL2xvY2FsaG9zdDo1MDAwIiwiaWF0IjoxNTkxNzExNjk3LCJleHAiOjE1OTE3OTgwOTcsImF6cCI6Ikk1Z1VlNExmb1FZNTNhS0RmWVdjelRPVG91MXYzb0FkIiwiZ3R5IjoicGFzc3dvcmQiLCJwZXJtaXNzaW9ucyI6WyJnZXQ6YWN0b3JzIiwiZ2V0Om1vdmllcyJdfQ.eZIErm0_qURCx0qDWobJZF8pv5FC5XDaB8g1Ug45hFjGxV-4YGbbWsvb_TyLNSzhK6vz3O0HEH7nDWNr8f6MHggwJldx5khsdAlTEeTQ-_kmVG6a4DFZ1dcDCwXEsO03sgMGfRPsBGsXWOQbfk7EUvLG_w2pMYy173wynuY1O23rpZENkMwa_m5nXqgbz69cjVpjrOruAGrotx55GlhXOQy-hZOqtMCdRRHr7P0kL1JmTA7Xfh4bcurcaEso78mLN4aPUmK9XXIxf0oy1HVC8XUehg_gZNbftw5w62eWPpAE6g_OUAc5ZAsa8kcBE_1TcEcJzQu23bRfWEKEuMjrgg'
 default_path='postgresql://postgres:1234@localhost:5432/casting_test'
 
 database_path=os.getenv('DATABASE_URL', default_path)
@@ -75,6 +75,17 @@ class CastingAgencyTestCase(unittest.TestCase):
         self.assertEqual(res.status_code, 200)
         self.assertTrue(len(data['actors']))
 
+    def test_get_actors_assistant(self):
+        res = self.client().get('/actors', headers={
+                        'Authorization': TOKEN_ASSISTANT}
+        )
+        data = json.loads(res.data)
+
+        self.assertEqual(res.status_code, 200)
+        self.assertTrue(len(data['actors']))
+
+
+
     # Test GET Movies
     def test_get_movies_public(self):
         res = self.client().get('/movies')
@@ -84,6 +95,15 @@ class CastingAgencyTestCase(unittest.TestCase):
     def test_get_movies_executive_producer(self):
         res = self.client().get('/movies', headers={
            'Authorization': TOKEN_PRODUCER}
+        )
+        data = json.loads(res.data)
+
+        self.assertEqual(res.status_code, 200)
+        self.assertTrue(len(data['movies']))
+
+    def test_get_movies_assistant(self):
+        res = self.client().get('/movies', headers={
+           'Authorization': TOKEN_ASSISTANT}
         )
         data = json.loads(res.data)
 
@@ -107,6 +127,16 @@ class CastingAgencyTestCase(unittest.TestCase):
         self.assertEqual(res.status_code, 201)
 #        self.assertGreater(len(Actor.query.all()), original_count)
         self.assertGreater(data['id'], 0)
+
+    def test_post_actors_assistant(self):
+        #original_count = len(Actor.query.all())
+
+        res = self.client().post('/actors/add', json=self.new_actor, headers={
+            'Authorization': TOKEN_ASSISTANT}
+        )
+
+        self.assertEqual(res.status_code, 401)
+#        self.assertGreater(len(Actor.query.all()), original_count)
 
     # Test POST Movie
     def test_post_movies_public(self):
@@ -140,6 +170,13 @@ class CastingAgencyTestCase(unittest.TestCase):
 
         self.assertEqual(res.status_code, 200)
         self.assertEqual(data['success'], True)
+
+    def test_patch_actors_assistant(self):
+        res = self.client().patch('/actors/2', json={'age': "69"}, headers={
+            'Authorization': TOKEN_ASSISTANT}
+        )
+
+        self.assertEqual(res.status_code, 401)
 
     def test_patch_actors_does_not_exist(self):
         res = self.client().patch('/actors/1000', json={'age': "49"}, headers={
@@ -193,6 +230,14 @@ class CastingAgencyTestCase(unittest.TestCase):
 
         self.assertEqual(res.status_code, 200)
         self.assertEqual(data['success'], True)
+
+    def test_delete_actors_assistant(self):
+        res = self.client().delete('/actors/1', headers={
+            'Authorization': TOKEN_ASSISTANT}
+        )
+
+        self.assertEqual(res.status_code, 401)
+
 
     def test_delete_actors_does_not_exist(self):
         res = self.client().delete('/actors/1000', headers={
