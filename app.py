@@ -67,7 +67,6 @@ def after_request(response):
 @TODO implement endpoint
     GET /actors
 '''
-db.session.refresh()
 
 
 @APP.route('/', methods=['GET'])
